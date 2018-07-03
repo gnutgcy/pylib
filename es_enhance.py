@@ -2,6 +2,7 @@
 
 
 from elasticsearch import Elasticsearch
+import log
 
 
 class es:
@@ -11,7 +12,7 @@ class es:
             self.def_body = {'query': {
                 'query_string': {'analyze_wildcard': False, 'query': '*'}}}
         except Exception as e:
-            print("[ERROR]es.__init__: " + str(e))
+            log.record("[ERROR]es.__init__: %s" % str(e))
         pass
 
     def delete(self, index, doc_type, body):
@@ -20,7 +21,7 @@ class es:
         try:
             result = self.es.search(index=index, doc_type=doc_type, body=body)
         except Exception as e:
-            print("[ERROR]es.search: " + str(e))
+            log.record("[ERROR]es.search: %s" % str(e))
             return 1
         hits = result['hits']['hits']
         for hit in hits:
@@ -28,7 +29,7 @@ class es:
                 self.es.delete(index=hit["_index"], doc_type=hit["_type"],
                                id=hit["_id"])
             except Exception as e:
-                print("[ERROR]es.delete: " + str(e))
+                log.record("[ERROR]es.delete: %s" % str(e))
                 return 2
         return 0
         pass
@@ -39,7 +40,7 @@ class es:
         try:
             result = self.es.search(index=index, doc_type=doc_type, body=body)
         except Exception as e:
-            print("[ERROR]es.search: " + str(e))
+            log.record("[ERROR]es.search: %s" % str(e))
             return None
         total = len(result['hits']['hits'])
         hits_info = {}
