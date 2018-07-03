@@ -5,7 +5,7 @@ from email.mime.text import MIMEText
 import smtplib
 
 
-def send_email(Subject, From, To, Cc, Text, url, username, password):
+def send(Subject, From, To, Cc, Text, url, username, password):
     msg = MIMEText(Text)
     msg["Subject"] = Subject
     msg["From"] = From
