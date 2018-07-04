@@ -42,11 +42,7 @@ class es:
         except Exception as e:
             log.record("[ERROR]es.search: %s" % str(e))
             return None
-        total = len(result['hits']['hits'])
-        hits_info = {}
-        hits_info['total'] = total
-        hits_info['hits'] = result['hits']['hits']
-        return hits_info
+        return result
         pass
 
 
